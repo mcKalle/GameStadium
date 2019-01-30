@@ -1,19 +1,20 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using TMPro;
+﻿using TMPro;
 using UnityEngine;
 
-public class UiManagerDropGame : MonoBehaviour
+namespace Assets._01_DropGame.Scripts
 {
-	 TextMeshProUGUI dropCountText;
+	public class UiManagerDropGame : MonoBehaviour
+	{
+		TextMeshProUGUI _dropCountText;
 
-	 private void Awake()
-	 {
-		  dropCountText = GameObject.FindGameObjectWithTag("GamePoints").GetComponent<TextMeshProUGUI>();
-	 }
+		private void Awake()
+		{
+			_dropCountText = GameObject.FindGameObjectWithTag("GamePoints").GetComponent<TextMeshProUGUI>();
+		}
 
-	 public void UpdateDropCount(int count)
-	 {
-		  dropCountText.text = count.ToString();
-	 }
+		public void UpdateDropCount(int count)
+		{
+			_dropCountText.text = count.ToString();
+		}
+	}
 }

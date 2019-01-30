@@ -1,100 +1,100 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
-using TMPro;
+﻿using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class CollectorPlayer : MonoBehaviour
+namespace Assets._01_DropGame.Scripts
 {
+	public class CollectorPlayer : MonoBehaviour
+	{
 
-	 [Header("Controls")]
-	 public KeyCode Left = KeyCode.A;
-	 public KeyCode Right = KeyCode.D;
+		[Header("Controls")]
+		public KeyCode left = KeyCode.A;
+		public KeyCode right = KeyCode.D;
 
-	 [Header("UI")]
-	 public Image itemIcon;
-	 public TextMeshProUGUI scoreText;
+		[Header("UI")]
+		public Image itemIcon;
+		public TextMeshProUGUI scoreText;
 
-	 Vector3 originalPosition;
+		Vector3 _originalPosition;
 
-	 int score = 0;
-	 int goodPoints = 0;
-	 int badPoints = 0;
+		int _score = 0;
+		int _goodPoints = 0;
+		int _badPoints = 0;
 
-	 GameManagerDropGame gameManager;
+		GameManagerDropGame _gameManager;
 
-	 private void Start()
-	 {
-		  gameManager = FindObjectOfType<GameManagerDropGame>();
+		private void Start()
+		{
+			_gameManager = FindObjectOfType<GameManagerDropGame>();
 
-		  originalPosition = transform.position;
+			_originalPosition = transform.position;
 
-		  goodPoints = gameManager.GoodPoints;
-		  badPoints = gameManager.BadPoints;
+			_goodPoints = _gameManager.goodPoints;
+			_badPoints = _gameManager.badPoints;
 
-		  UpdatePlayerScore(score);
-	 }
+			UpdatePlayerScore(_score);
+		}
 
-	 public void Update()
-	 {
-		  if (Input.GetKeyDown(Left))
-		  {
+		public void Update()
+		{
+			if (Input.GetKeyDown(left))
+			{
 				CatchLeft();
-		  }
-		  if (Input.GetKeyDown(Right))
-		  {
+			}
+			if (Input.GetKeyDown(right))
+			{
 				CatchRight();
-		  }
+			}
 
-		  if (Input.GetKeyUp(Left))
-		  {
+			if (Input.GetKeyUp(left))
+			{
 				CatchRight();
-		  }
-		  else if (Input.GetKeyUp(Right))
-		  {
+			}
+			else if (Input.GetKeyUp(right))
+			{
 				CatchLeft();
-		  }
-	 }
+			}
+		}
 
-	 void CatchLeft()
-	 {
-		  transform.position += new Vector3(-1, 0);
-	 }
+		void CatchLeft()
+		{
+			transform.position += new Vector3(-1, 0);
+		}
 
-	 void CatchRight()
-	 {
-		  transform.position += new Vector3(1, 0);
-	 }
+		void CatchRight()
+		{
+			transform.position += new Vector3(1, 0);
+		}
 
-	 private void OnTriggerEnter2D(Collider2D collision)
-	 {
-		  if (collision.tag == "BadItem")
-		  {
+		private void OnTriggerEnter2D(Collider2D collision)
+		{
+			if (collision.tag == "BadItem")
+			{
 				
-				if (score - badPoints < 0)
+				if (_score - _badPoints < 0)
 				{
-					 score = 0;
+					_score = 0;
 				}
 				else
 				{
-					 score -= badPoints;
+					_score -= _badPoints;
 				}
 
-				UpdatePlayerScore(score);
+				UpdatePlayerScore(_score);
 				Destroy(collision.gameObject);
-		  }
-		  else if (collision.tag == "GoodItem")
-		  {
-				score += goodPoints;
+			}
+			else if (collision.tag == "GoodItem")
+			{
+				_score += _goodPoints;
 
-				UpdatePlayerScore(score);
+				UpdatePlayerScore(_score);
 				Destroy(collision.gameObject);
-		  }
-	 }
+			}
+		}
 
-	 void UpdatePlayerScore(int score)
-	 {
-		  scoreText.text = score.ToString();
-	 }
+		void UpdatePlayerScore(int score)
+		{
+			scoreText.text = score.ToString();
+		}
+	}
 }
