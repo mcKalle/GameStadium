@@ -10,7 +10,7 @@ namespace Assets._01_DropGame.Scripts
 	{
 		public GameObject goodItem;
 		public GameObject badItem;
-		public int chanceForBadItemInPercentage = 20;
+		public int chanceOfBadItem = 20;
 
 		// spawning rate
 		// this is the normal spawn rate
@@ -43,6 +43,7 @@ namespace Assets._01_DropGame.Scripts
 		private float _fallSpeed;
 
 		private GameManagerDropGame _gameManager;
+		private DifficultyManager _difficultyManager;
 		private UiManagerDropGame _uiManager;
 
 		private List<GameObject> _playerSpawners;
@@ -50,10 +51,14 @@ namespace Assets._01_DropGame.Scripts
 		private void Awake()
 		{
 			_gameManager = FindObjectOfType<GameManagerDropGame>();
+			_difficultyManager = FindObjectOfType<DifficultyManager>();
 			_uiManager = FindObjectOfType<UiManagerDropGame>();
 
 			_countOfDropObjects = _gameManager.countOfDropObjects;
 			_uiManager.UpdateDropCount(_countOfDropObjects);
+
+			_difficultyManager.SetDifficultySettings(_gameManager.gameDifficulty);
+			_uiManager.PrintDifficulty(_gameManager.gameDifficulty);
 
 			_spawningRate = defaultSpawnRate;
 			_fallSpeed = defaultFallSpeed;
