@@ -48,7 +48,7 @@ namespace Assets._01_DropGame.Scripts
 
 		private List<GameObject> _playerSpawners;
 
-		private void Awake()
+		private void Start()
 		{
 			_gameManager = FindObjectOfType<GameManagerDropGame>();
 			_difficultyManager = FindObjectOfType<DifficultyManager>();
@@ -65,15 +65,16 @@ namespace Assets._01_DropGame.Scripts
 
 			// get all player spawner
 			_playerSpawners = GameObject.FindGameObjectsWithTag("PlayerSpawner").ToList();
-		}
 
-		private void Start()
-		{
 			StartCoroutine(Spawing_Coroutine());
 		}
 
 		public IEnumerator Spawing_Coroutine()
 		{
+			// set this variables, so the first elements are always single elements with default speed
+			_countOfFastSpawningElements = 10;
+			_spawnMultipleElementsRapidly = true;
+
 			while (_countOfDropObjects > 0)
 			{
 				// spawn & only decrease if a good item was spawned
@@ -108,11 +109,13 @@ namespace Assets._01_DropGame.Scripts
 
 				yield return new WaitForSeconds(_spawningRate);
 
+				// decrease counter of rapid spawning elements
 				if (_spawnMultipleElementsRapidly)
 				{
 					_countOfFastSpawningElements--;
 				}
 
+				// reset rate and speed
 				if (_countOfFastSpawningElements == 0)
 				{
 					_spawningRate = defaultSpawnRate;

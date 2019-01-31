@@ -6,6 +6,7 @@ namespace Assets._01_DropGame.Scripts
 {
 	public class CollectorPlayer : MonoBehaviour
 	{
+		public bool isComPlayer;
 
 		[Header("Controls")]
 		public KeyCode left = KeyCode.A;
@@ -37,22 +38,32 @@ namespace Assets._01_DropGame.Scripts
 
 		public void Update()
 		{
-			if (Input.GetKeyDown(left))
+			if (!isComPlayer)
 			{
-				CatchLeft();
-			}
-			if (Input.GetKeyDown(right))
-			{
-				CatchRight();
-			}
+				if (Input.GetKeyDown(left))
+				{
+					CatchLeft();
+				}
+				if (Input.GetKeyDown(right))
+				{
+					CatchRight();
+				}
 
-			if (Input.GetKeyUp(left))
-			{
-				CatchRight();
+				if (Input.GetKeyUp(left))
+				{
+					CatchRight();
+				}
+				else if (Input.GetKeyUp(right))
+				{
+					CatchLeft();
+				}
 			}
-			else if (Input.GetKeyUp(right))
+			else
 			{
-				CatchLeft();
+					// get spawner and items 
+					// define a range in which the com starts to react
+					// chance of catching bad items decreases
+					// chance of catching good items increases
 			}
 		}
 
@@ -70,7 +81,7 @@ namespace Assets._01_DropGame.Scripts
 		{
 			if (collision.tag == "BadItem")
 			{
-				
+
 				if (_score - _badPoints < 0)
 				{
 					_score = 0;
