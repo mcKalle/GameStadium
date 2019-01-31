@@ -1,0 +1,95 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &4275438916266668436
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4275438916266668438}
+  - component: {fileID: 4275438916266668439}
+  - component: {fileID: 4275438916266668433}
+  - component: {fileID: 4275438916266668432}
+  m_Layer: 0
+  m_Name: GameManager_DroppingGame
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &4275438916266668438
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4275438916266668436}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &4275438916266668439
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4275438916266668436}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 83ceffeb09444044cbc404c13beb6ef3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  countOfDropObjects: 75
+  goodPoints: 1
+  badPoints: 3
+  gameDifficulty: 1
+--- !u!114 &4275438916266668433
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4275438916266668436}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a72d00e11076bc341b3702c61fe95b9d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  goodItem: {fileID: 1118548815264320, guid: b1a2ddd158798e54ba5e4a69cafe6bb5, type: 3}
+  badItem: {fileID: 1118548815264320, guid: d8f128036c5032b4d81e2eb125b96d75, type: 3}
+  chanceOfBadItem: 33
+  defaultSpawnRate: 1.4
+  fastestSpawnRate: 0.8
+  chanceOfRapidSpawningElements: 33
+  maxCountOfElementsSpawnedFaster: 3
+  defaultFallSpeed: 1
+  maxFallSpeed: 1.5
+  increaseFactorFallSpeed: 0.3
+  changeFactorEveryXDropElement: 10
+--- !u!114 &4275438916266668432
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4275438916266668436}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 280714e4fd44b9d46b3030a2ea0c5063, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  chanceOfRapidSpawningElementsEasy: 33
+  chanceOfBadItemEasy: 33
+  difficultyMultiplierEasy: 1
+  chanceOfRapidSpawningElementsNormal: 44
+  chanceOfBadItemNormal: 40
+  difficultyMultiplierNormal: 1.25
+  chanceOfRapidSpawningElementsHard: 60
+  chanceOfBadItemHard: 50
+  difficultyMultiplierHard: 1.35
