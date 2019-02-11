@@ -1,4 +1,7 @@
-﻿using TMPro;
+﻿using System.Collections;
+using System.Collections.Generic;
+using System.Linq;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -8,6 +11,9 @@ namespace Assets._01_DropGame.Scripts
 	{
 		public bool isComPlayer;
 
+		[HideInInspector]
+		public PlayerPosition currenPlayerPosition;
+
 		[Header("Controls")]
 		public KeyCode left = KeyCode.A;
 		public KeyCode right = KeyCode.D;
@@ -16,18 +22,27 @@ namespace Assets._01_DropGame.Scripts
 		public Image itemIcon;
 		public TextMeshProUGUI scoreText;
 
+		[Header("Spawner")]
+		public GameObject spawner;
+
+		[Header("COM - Random Wait Time for Reset")]
+		public float waitTimeMin = 0.3f;
+		public float waitTimeMax = 0.6f;
+		[Header("COM Reaction")]
+		public ComCatchReactionScript comCatchReactionScript;
+
 		Vector3 _originalPosition;
 
 		int _score = 0;
 		int _goodPoints = 0;
 		int _badPoints = 0;
-
+	
 		GameManagerDropGame _gameManager;
 
-		private void Start()
+		private void Awake()
 		{
 			_gameManager = FindObjectOfType<GameManagerDropGame>();
-
+			
 			_originalPosition = transform.position;
 
 			_goodPoints = _gameManager.goodPoints;
@@ -42,62 +57,69 @@ namespace Assets._01_DropGame.Scripts
 			{
 				if (Input.GetKeyDown(left))
 				{
-					CatchLeft();
+					if (currenPlayerPosition != PlayerPosition.Left)
+					{
+						CatchLeft();
+					}
 				}
 				if (Input.GetKeyDown(right))
 				{
-					CatchRight();
+					if (currenPlayerPosition != PlayerPosition.Right)
+					{
+						CatchRight();
+					}
 				}
 
 				if (Input.GetKeyUp(left))
 				{
-					CatchRight();
+					ResetPosition();
 				}
 				else if (Input.GetKeyUp(right))
 				{
-					CatchLeft();
+					ResetPosition();
 				}
 			}
-			else
-			{
-					// get spawner and items 
-					// define a range in which the com starts to react
-					// chance of catching bad items decreases
-					// chance of catching good items increases
-			}
 		}
 
-		void CatchLeft()
+		public void CatchLeft()
 		{
 			transform.position += new Vector3(-1, 0);
+			currenPlayerPosition = PlayerPosition.Left;
 		}
 
-		void CatchRight()
+		public void CatchRight()
 		{
 			transform.position += new Vector3(1, 0);
+			currenPlayerPosition = PlayerPosition.Right;
 		}
 
 		private void OnTriggerEnter2D(Collider2D collision)
 		{
-			if (collision.tag == "BadItem")
+			if (collision.tag == "FallingItem")
 			{
+				ItemScript item = collision.GetComponent<ItemScript>();
 
-				if (_score - _badPoints < 0)
+				if (item.isBadItem)
 				{
-					_score = 0;
+					if (_score - _badPoints < 0)
+					{
+						_score = 0;
+					}
+					else
+					{
+						_score -= _badPoints;
+					}
 				}
 				else
 				{
-					_score -= _badPoints;
+					_score += _goodPoints;
 				}
 
-				UpdatePlayerScore(_score);
-				Destroy(collision.gameObject);
-			}
-			else if (collision.tag == "GoodItem")
-			{
-				_score += _goodPoints;
-
+				if (isComPlayer)
+				{
+					ComResetPosition();
+				}
+				
 				UpdatePlayerScore(_score);
 				Destroy(collision.gameObject);
 			}
@@ -107,5 +129,32 @@ namespace Assets._01_DropGame.Scripts
 		{
 			scoreText.text = score.ToString();
 		}
+
+		public void ComResetPosition()
+		{
+			StartCoroutine(ComResetPosition_Coroutine());
+		}
+
+		public IEnumerator ComResetPosition_Coroutine()
+		{
+			float randomWaitTime = Random.Range(waitTimeMin, waitTimeMax);
+
+			yield return new WaitForSeconds(randomWaitTime);
+
+			ResetPosition();
+		}
+
+		public void ResetPosition()
+		{
+			transform.position = _originalPosition;
+			currenPlayerPosition = PlayerPosition.Center;
+		}
+	}
+
+	public enum PlayerPosition
+	{
+		Left,
+		Center,
+		Right
 	}
 }

@@ -10,9 +10,10 @@ TagManager:
   - GamePoints
   - GameIcon
   - PlayerSpawner
-  - BadItem
-  - GoodItem
   - ItemDestroyer
+  - FallingItem
+  - GoodItem
+  - BadItem
   layers:
   - Default
   - TransparentFX

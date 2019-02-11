@@ -16,10 +16,8 @@ namespace Assets.Scripts
 				{
 					 return true;
 				}
-				else
-				{
-					 return false;
-				}
+
+				return false;
 		  }
 	 }
 }
